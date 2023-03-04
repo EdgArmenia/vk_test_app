@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MyApp : Application() {
     private val BASE_URL: String = "https://api.giphy.com/"
-    lateinit var apiService: ApiService
+    lateinit var gifsApi: ApiService
 
     override fun onCreate() {
         super.onCreate()
@@ -33,6 +33,6 @@ class MyApp : Application() {
             .client(client)
             .build()
 
-        apiService = retrofit.create(ApiService::class.java)
+        gifsApi = retrofit.create(ApiService::class.java)
     }
 }

@@ -8,20 +8,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.vktestpractice.R
 import com.example.vktestpractice.databinding.GifItemBinding
+import com.example.vktestpractice.fragments.FirstFragmentListener
 import com.example.vktestpractice.model.GifData
 
-class GifListAdapter(private val gifs: List<GifData>, private val context: Context) :
+class GifListAdapter(
+    private val gifs: List<GifData>,
+    private val context: Context,
+    private val firstFragmentListener: FirstFragmentListener
+) :
     RecyclerView.Adapter<GifListAdapter.GifHolder>() {
 
     class GifHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = GifItemBinding.bind(itemView)
 
-        fun bind(itemGif: GifData, context: Context) {
-            Glide.with(context).load(itemGif.url).into(binding.imageView)
+        fun bind(itemGif: GifData, context: Context, firstFragmentListener: FirstFragmentListener) {
+            Glide.with(context).load(itemGif.images.original.url).into(binding.imageView)
             binding.textView.text = itemGif.title
 
             binding.cardView.setOnClickListener {
-
+                firstFragmentListener.onGifClick(itemGif)
             }
         }
     }
@@ -35,6 +40,6 @@ class GifListAdapter(private val gifs: List<GifData>, private val context: Conte
     override fun getItemCount(): Int = gifs.size
 
     override fun onBindViewHolder(holder: GifHolder, position: Int) {
-        holder.bind(gifs[position], context)
+        holder.bind(gifs[position], context, firstFragmentListener)
     }
 }
