@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(){
         if (savedInstanceState == null) {
             val fragment = FirstFragment.newInstance()
 
+            // Set first fragment on activity
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragmentContainer, fragment).commit()
         }

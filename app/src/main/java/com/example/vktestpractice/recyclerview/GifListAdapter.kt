@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.vktestpractice.R
 import com.example.vktestpractice.databinding.GifItemBinding
-import com.example.vktestpractice.fragments.FirstFragmentListener
+import com.example.vktestpractice.fragments.contract.FirstFragmentListener
 import com.example.vktestpractice.model.GifData
 
+// Implement recycler view adapter
 class GifListAdapter(
     private val gifs: List<GifData>,
     private val context: Context,
@@ -18,10 +19,12 @@ class GifListAdapter(
 ) :
     RecyclerView.Adapter<GifListAdapter.GifHolder>() {
 
+    // Implement recycler view holder where set data to each items
     class GifHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = GifItemBinding.bind(itemView)
 
         fun bind(itemGif: GifData, context: Context, firstFragmentListener: FirstFragmentListener) {
+            // With the Glide we set the gif to imageView
             Glide.with(context).load(itemGif.images.original.url).into(binding.imageView)
             binding.textView.text = itemGif.title
 

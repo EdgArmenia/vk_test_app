@@ -32,6 +32,7 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Set toolbar and show back button
         (activity as AppCompatActivity).apply {
             setSupportActionBar(binding.toolBar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -47,6 +48,7 @@ class SecondFragment : Fragment() {
         binding.tvImportDateTime.text = "Import DateTime: ${gifData.importDatetime}"
     }
 
+    // Implement back button
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (parentFragmentManager.backStackEntryCount > 0) {
             parentFragmentManager.popBackStack()
@@ -56,10 +58,15 @@ class SecondFragment : Fragment() {
 
 
     companion object {
+
+        // Create key to get gifData
         @JvmStatic
         private val GIF_DATA_VALUE = "GIFS_DATA_VALUE"
 
-        // TODO: Rename and change types and number of parameters
+        /** Implement a constructor for fragment
+         *  with Bundle we put serializable object as argument of fragment
+         */
+
         @JvmStatic
         fun newInstance(gifData: GifData) =
             SecondFragment().apply {

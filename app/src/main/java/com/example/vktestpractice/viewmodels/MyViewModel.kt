@@ -10,9 +10,19 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class MyViewModel(app: Application) : AndroidViewModel(app) {
+    // Create liveData of list of our gifs
     val gifsList: MutableLiveData<List<GifData>> = MutableLiveData<List<GifData>>()
+
+    // Implement compositeDisposable
     private val compositeDisposable = CompositeDisposable()
 
+
+    /** Implement method, where execute our http-request to get and put data to liveData
+     *
+     *  Subscribe to a new thread and execute our operation asynchrony
+     *  Then add observer (main thread), subscribe on observable source (ApiResponseData)
+     *  And post value to liveData
+     * */
     fun getGifs(gifsApi: ApiService, query: String) {
         compositeDisposable.add(gifsApi.getGifs(query)
             .subscribeOn(Schedulers.io())

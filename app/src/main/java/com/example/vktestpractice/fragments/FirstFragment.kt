@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vktestpractice.MyApp
 import com.example.vktestpractice.R
 import com.example.vktestpractice.databinding.FragmentFirstBinding
+import com.example.vktestpractice.fragments.contract.FirstFragmentListener
 import com.example.vktestpractice.model.GifData
 import com.example.vktestpractice.recyclerview.GifListAdapter
 import com.example.vktestpractice.viewmodels.MyViewModel
@@ -35,22 +36,28 @@ class FirstFragment : Fragment(), FirstFragmentListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Set toolbar
         (activity as AppCompatActivity).setSupportActionBar(binding.toolBar)
 
+
+        // Subscribe to liveData from viewModel
         viewModel.gifsList.observe(viewLifecycleOwner) {
             showData(it)
         }
 
     }
 
+    // Set recycler view
     private fun showData(gifsList: List<GifData>) = with(binding) {
         rcView.layoutManager = LinearLayoutManager(requireContext())
         rcView.adapter = GifListAdapter(gifsList, requireContext(), this@FirstFragment)
     }
 
+    // Implement method from interface FirstFragmentListener
     override fun onGifClick(gifData: GifData) {
         val fragment = SecondFragment.newInstance(gifData)
 
+        // Set second fragment
         parentFragmentManager
             .beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
@@ -58,20 +65,25 @@ class FirstFragment : Fragment(), FirstFragmentListener {
             .commit()
     }
 
-    @Deprecated("Deprecated in Java")
+    // Implement our toolBar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
         inflater.inflate(R.menu.first_fragment_menu, menu)
 
+        // Create searchView
         val searchView = SearchView((context as AppCompatActivity).supportActionBar?.themedContext!!)
 
+        // Set searchView to toolBar
         menu.findItem(R.id.search_button).actionView = searchView
 
+        // Implement listener for searchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+
                 showTextIntro(query == null || query.isEmpty())
 
+                // Send a request to get data from api
                 viewModel.getGifs((activity?.application as MyApp).gifsApi, query!!)
                 return true
             }

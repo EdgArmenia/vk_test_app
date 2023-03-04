@@ -18,7 +18,9 @@ class MyApp : Application() {
         configureRetrofit()
     }
 
+    // Implement retrofit
     private fun configureRetrofit() {
+        // create httpLoggingInterceptor to see in logcat all information about requests
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
