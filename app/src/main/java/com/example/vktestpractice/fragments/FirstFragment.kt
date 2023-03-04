@@ -77,33 +77,21 @@ class FirstFragment : Fragment(), FirstFragmentListener {
         // Set searchView to toolBar
         menu.findItem(R.id.search_button).actionView = searchView
 
+
         // Implement listener for searchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-
-                showTextIntro(query == null || query.isEmpty())
-
                 // Send a request to get data from api
                 viewModel.getGifs((activity?.application as MyApp).gifsApi, query!!)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-
-                showTextIntro(newText == null || newText.isEmpty())
-
                 viewModel.getGifs((activity?.application as MyApp).gifsApi, newText!!)
                 return true
             }
 
         })
-    }
-
-    private fun showTextIntro(textIsEmpty: Boolean) = with(binding){
-        when (textIsEmpty) {
-            true -> tViewInfo.visibility = View.VISIBLE
-            false -> tViewInfo.visibility = View.GONE
-        }
     }
 
     companion object {

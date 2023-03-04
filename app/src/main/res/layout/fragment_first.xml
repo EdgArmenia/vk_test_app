@@ -37,12 +37,4 @@
 
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tViewInfo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/please_send_a_query"
-        android:gravity="center"/>
-
 </FrameLayout>
